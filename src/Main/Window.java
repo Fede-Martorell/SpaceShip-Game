@@ -93,7 +93,6 @@ public class Window extends JFrame implements Runnable{
         gameState = new GameState();
     }
 
-
     @Override
     public void run() {
 

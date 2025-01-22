@@ -1,35 +1,50 @@
 package GameObjects;
 
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import Graphics.Assets;
 
 import Input.KeyBoard;
 import Math.Vector2D;
 
-public class Player extends GameObject{
+public class Player extends MovingObjects{
 
-    public Player(Vector2D position, BufferedImage texture) {
-        super(position, texture);
+    private Vector2D heading;
+
+    public Player(Vector2D position,Vector2D velocity, BufferedImage texture) {
+        super(position,velocity, texture);
+        heading = new Vector2D(0,1);
     }
 
     @Override
     public void update() {
-        if(KeyBoard.RIGHT || KeyBoard.Right){
-            position.setX(position.getX() + 1);
+
+        //Rotacion sentido aguja del reloj.
+        if (KeyBoard.Right || KeyBoard.RIGHT){
+            angle += Math.PI/25;
         }
-        if( KeyBoard.LEFT || KeyBoard.Left){
-            position.setX(position.getX() - 1);
+        //Rotacion sentido en contra de la aguja del reloj.
+        if (KeyBoard.Left || KeyBoard.LEFT){
+            angle -= Math.PI/25;
         }
-        if( KeyBoard.UP || KeyBoard.Up){
-            position.setY(position.getY() - 1);
-        }
-        if( KeyBoard.DOWN || KeyBoard.Down){
-            position.setY(position.getY() +1);
-        }
+        //rotacion en radianes. PI/2 = 90 degrees.
+        heading = heading.setDirection(angle-Math.PI/2);
     }
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(texture, (int)position.getX(), (int)position.getY(), null);
+        Graphics2D g2d = (Graphics2D) g;
+
+        //Transformacion de la posicion a la actual.
+        at = AffineTransform.getTranslateInstance(position.getX(), position.getY());
+
+        //Aplicamos la transformacion, este se realiza en torno al centro del objeto.
+        at.rotate(angle, Assets.player.getWidth()/2, Assets.player.getHeight()/2 );
+
+        //Dibujamos el objeto.
+        g2d.drawImage(Assets.player, at, null);
+
+
     }
 }
