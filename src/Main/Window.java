@@ -7,13 +7,13 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import GameObjects.Constants;
 import Graphics.Assets;
 import Input.KeyBoard;
 import States.GameState;
 
 public class Window extends JFrame implements Runnable{
 
-    public static final int WIDTH = 800, HEIGHT = 600;
     private Canvas canvas;
     private Thread thread;
     private boolean running = false;
@@ -33,23 +33,22 @@ public class Window extends JFrame implements Runnable{
     public Window()
     {
         setTitle("Space Ship Game");
-        setSize(WIDTH, HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
-        setVisible(true);
 
         canvas = new Canvas();
         keyBoard = new KeyBoard();
 
-        canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        canvas.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        canvas.setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         canvas.setFocusable(true);
 
         add(canvas);
         canvas.addKeyListener(keyBoard);
-
+        setVisible(true);
     }
 
     public static void main(String[] args) {
@@ -76,7 +75,7 @@ public class Window extends JFrame implements Runnable{
 
         g.setColor(Color.BLACK);
 
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
 
         gameState.draw(g);
 

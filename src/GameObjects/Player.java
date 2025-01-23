@@ -7,43 +7,54 @@ import Graphics.Assets;
 
 import Input.KeyBoard;
 import Math.Vector2D;
+import States.GameState;
 
 public class Player extends MovingObjects{
 
     private Vector2D heading;
     private Vector2D acceleration;
-    private final double ACC = 0.2;
-    private double DELTAANGLE = 0.08;
+
     private boolean accelerating = false;
 
+    private Chronometer fireRate;
 
-    public Player(Vector2D position,Vector2D velocity,double maxVel, BufferedImage texture) {
-        super(position,velocity,maxVel, texture);
+
+
+    public Player(Vector2D position,Vector2D velocity,double maxVel, BufferedImage texture, GameState gameState) {
+        super(position,velocity,maxVel, texture, gameState);
         heading = new Vector2D(0,1);
         acceleration = new Vector2D();
+        fireRate = new Chronometer();
     }
 
     @Override
     public void update() {
 
+        if(KeyBoard.SHOOT && !fireRate.isRunning()){
+            gameState.getMovingObjects().add(0,new Laser(
+                    getCenter().add(heading.scale(width)),heading, Constants.LASER_VEL,
+                    angle,Assets.greenLaser, gameState));
+            fireRate.run(Constants.FIRERATE);
+        }
+
         //Rotacion sentido aguja del reloj.
         if (KeyBoard.Right || KeyBoard.RIGHT){
-            angle += DELTAANGLE;
+            angle += Constants.DELTAANGLE;
         }
         //Rotacion sentido en contra de la aguja del reloj.
         if (KeyBoard.Left || KeyBoard.LEFT){
-            angle -= DELTAANGLE;
+            angle -= Constants.DELTAANGLE;
         }
 
         // Vector aceleracion apunta hacia la direccion heading, y su magnitud sera de ACC.
         if (KeyBoard.Up || KeyBoard.UP){
-            acceleration = heading.scale(ACC);
+            acceleration = heading.scale(Constants.ACC);
             accelerating = true;
         }else{
             //corroboramos que la velocidad no sea 0
             if (velocity.getMagnitude() != 0){
                 //Si la velocidad es negativa, le aplicamos una aceleracion en sentido contrario.
-                acceleration = (velocity.scale(-1).normalize()).scale(ACC/2);
+                acceleration = (velocity.scale(-1).normalize()).scale(Constants.ACC/2);
                 accelerating = false;
             }
 
@@ -53,26 +64,25 @@ public class Player extends MovingObjects{
         velocity = velocity.limit(maxVel);
 
 
-
         //rotacion en radianes. PI/2 = 90 degrees.
         heading = heading.setDirection(angle-Math.PI/2);
 
         position = position.add(velocity);
 
         //Evita que el jugador salga de la pantalla.
-        if (position.getX() > Main.Window.WIDTH){
+        if (position.getX() > Constants.WIDTH){
             position.setX(0);
         }
-        if (position.getY() > Main.Window.HEIGHT){
+        if (position.getY() > Constants.HEIGHT){
             position.setY(0);
         }
         if (position.getX() < 0){
-            position.setX(Main.Window.WIDTH);
+            position.setX(Constants.WIDTH);
         }
         if (position.getY() < 0){
-            position.setY(Main.Window.HEIGHT);
+            position.setY(Constants.HEIGHT);
         }
-
+        fireRate.update();
     }
 
     @Override
@@ -99,5 +109,9 @@ public class Player extends MovingObjects{
         g2d.drawImage(Assets.player, at, null);
 
 
+    }
+
+    public Vector2D getCenter(){
+        return new Vector2D(position.getX() + width/2, position.getY() + height/2);
     }
 }
