@@ -11,6 +11,8 @@ public abstract class MovingObjects extends GameObject {
     protected AffineTransform at;   //rotacion
     protected double angle;
     protected double maxVel;
+    protected int width;
+    protected int height;
 
 
 
@@ -18,6 +20,8 @@ public abstract class MovingObjects extends GameObject {
         super(position, texture);
         this.velocity = velocity;
         this.maxVel = maxVel;
+        width = texture.getWidth();
+        height = texture.getHeight();
         angle = 0;
     }
 }

@@ -25,19 +25,12 @@ public class Vector2D {
     }
 
     //limitador de velocidad de objetos.
-    public void limit(double value){
-        if(x>value){
-            x = value;
+    public Vector2D limit(double value){
+        //de esta manera no perdemos su direccion por cuadrante.
+        if(getMagnitude() > value){
+            return  this.normalize().scale(value);
         }
-        if(x< -value){
-            x = -value;
-        }
-        if(y>value){
-            y = value;
-        }
-        if(y< -value){
-            y = -value;
-        }
+        return this;
     }
 
     //Normalizamos los vectores para que den 1.
