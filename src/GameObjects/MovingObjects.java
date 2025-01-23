@@ -18,7 +18,7 @@ public abstract class MovingObjects extends GameObject {
 
 
 
-    public MovingObjects(Vector2D position,Vector2D velocity,double maxVel, BufferedImage texture, GameState gameState) {
+    public MovingObjects(Vector2D position, Vector2D velocity, double maxVel, BufferedImage texture, GameState gameState) {
         super(position, texture);
         this.velocity = velocity;
         this.maxVel = maxVel;

@@ -38,6 +38,7 @@ public class Window extends JFrame implements Runnable{
         setResizable(false);
         setLocationRelativeTo(null);
 
+
         canvas = new Canvas();
         keyBoard = new KeyBoard();
 
