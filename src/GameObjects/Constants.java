@@ -6,7 +6,7 @@ public class Constants {
     public static final int HEIGHT = 600;
 
     // player properties
-    public static final int FIRERATE = 300;
+    public static final int FIRERATE = 200;
     public static final double DELTAANGLE = 0.1;
     public static final double ACC = 0.2;
     public static final double PLAYER_MAX_VEL = 7.0;

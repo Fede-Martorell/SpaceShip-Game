@@ -18,6 +18,9 @@ public class Vector2D {
     public Vector2D add(Vector2D v){
         return new Vector2D(x + v.getX(), y + v.getY());
     }
+    public Vector2D subtract(Vector2D v){
+        return new Vector2D(x - v.getX(), y - v.getY());
+    }
 
     //escala para aceleracion.
     public Vector2D scale(double value){

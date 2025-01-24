@@ -83,6 +83,7 @@ public class Player extends MovingObjects{
             position.setY(Constants.HEIGHT);
         }
         fireRate.update();
+        collideWith();
     }
 
     @Override
@@ -111,7 +112,4 @@ public class Player extends MovingObjects{
 
     }
 
-    public Vector2D getCenter(){
-        return new Vector2D(position.getX() + width/2, position.getY() + height/2);
-    }
 }

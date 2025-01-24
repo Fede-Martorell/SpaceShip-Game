@@ -13,11 +13,13 @@ import GameObjects.Player;
 import GameObjects.Size;
 import Graphics.Assets;
 import Math.Vector2D;
+import Graphics.Animation;
 
 public class GameState {
 
     private Player player;
     private ArrayList<MovingObjects> movingObjects = new ArrayList<MovingObjects>();
+    private ArrayList<Animation> explosions = new ArrayList<Animation>();
 
     private int meteors;
 
@@ -29,6 +31,36 @@ public class GameState {
         movingObjects.add(player);
         meteors = 1;
         startWave();
+    }
+
+    public void divideMeteor(Meteor meteor){
+        //tamaño del meteoro actual
+        Size size = meteor.getSize();
+
+        BufferedImage[] texture = size.textures;
+        //Cambio de tamaño del meteoro
+        Size newSize = null;
+        switch (size){
+            case BIG:
+                newSize = Size.MED;
+                break;
+            case MED:
+                newSize = Size.SMALL;
+                break;
+            case SMALL:
+                newSize = Size.TINY;
+                break;
+            default:
+                return;
+        }
+        //creamos los nuevos meteoros
+        for(int i = 0; i < size.quantity; i++){
+            movingObjects.add(new Meteor(meteor.getPosition(),
+                    new Vector2D(0,1).setDirection(Math.random()*Math.PI*2),
+                    Constants.METEOR_VEL * Math.random() + 1,
+                    texture[(int)(Math.random()*texture.length)],this, newSize));
+        }
+
     }
 
     private void startWave(){
@@ -48,11 +80,26 @@ public class GameState {
         meteors++;
     }
 
+    public void playExplosion(Vector2D position){
+        explosions.add(new Animation(Assets.exp, 50,position.subtract
+                (new Vector2D(Assets.exp[0].getWidth()/2, Assets.exp[0].getHeight()))));
+
+    }
+
 
     public void update()
     {
+        //actualizacion de objetos
         for(int i = 0; i < movingObjects.size(); i++){
             movingObjects.get(i).update();
+        }
+        //actualizacion de explosiones
+        for(int i = 0; i < explosions.size(); i++){
+            Animation anim = explosions.get(i);
+            anim.update();
+            if(!anim.isRunning()){
+                explosions.remove(i);
+            }
         }
         // cuando rompo un meteoro genero otro.
         for(int i = 0; i < movingObjects.size(); i++) {
@@ -71,6 +118,13 @@ public class GameState {
 
         for(int i = 0; i < movingObjects.size(); i++){
             movingObjects.get(i).draw(g);
+        }
+        // Dibujamos las explosiones.
+        for(int i = 0; i < explosions.size(); i++){
+            Animation anim = explosions.get(i);
+            g2d.drawImage(anim.getCurrentFrame(), (int)anim.getPosition().getX(),
+                    (int)anim.getPosition().getY(),null);
+
         }
     }
 
