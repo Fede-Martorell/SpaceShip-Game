@@ -18,6 +18,7 @@ public class GameState {
     private ArrayList<Animation> explosions = new ArrayList<Animation>();
 
     private int score = 0;
+    private int lives = 3;
 
     private int meteors;
 
@@ -163,6 +164,7 @@ public class GameState {
 
         }
         drawScore(g);
+        drawLives(g);
     }
 
     private void drawScore(Graphics g){
@@ -172,6 +174,27 @@ public class GameState {
             g.drawImage(Assets.numbers[Integer.parseInt(scoreToString.substring(i,i+1))],
                     (int)pos.getX(), (int)pos.getY(),null);
             pos.setX(pos.getX() + 20);
+        }
+    }
+    private void drawLives(Graphics g){
+        Vector2D livePosition = new Vector2D(25,25);
+        g.drawImage(Assets.life, (int)livePosition.getX(), (int)livePosition.getY(), null);
+        g.drawImage(Assets.numbers[10], (int)livePosition.getX()+40,
+                (int)livePosition.getY()+5,null);
+
+        String livesToString = Integer.toString(lives);
+        Vector2D pos = new Vector2D(livePosition.getX(),livePosition.getY());
+        for(int i = 0; i < livesToString.length(); i++){
+            int number = Integer.parseInt(livesToString.substring(i,i+1));
+            if(number <= 0) {
+                break;
+            }
+
+            g.drawImage(Assets.numbers[number],(int)pos.getX()+60,
+                        (int)pos.getY()+5,null);
+
+            pos.setX(pos.getX() + 20);
+
         }
     }
 

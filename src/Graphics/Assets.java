@@ -1,5 +1,6 @@
 package Graphics;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
@@ -19,8 +20,8 @@ public class Assets {
     //UFO
     public static BufferedImage ufo;
     //numers
-    public static BufferedImage[] numbers = new BufferedImage[10];
-
+    public static BufferedImage[] numbers = new BufferedImage[11];
+    public static BufferedImage life;
 
     public static void init()
     {
@@ -29,6 +30,7 @@ public class Assets {
         blueLaser = Loader.ImageLoader("/PNG/Lasers/laserBlue01.png");
         redLaser = Loader.ImageLoader("/PNG/Lasers/laserRed01.png");
         greenLaser = Loader.ImageLoader("/PNG/Lasers/laserGreen11.png");
+        life = Loader.ImageLoader("/PNG/UI/playerLife1_blue.png");
 
         for(int i = 0; i < bigs.length; i++){
             bigs[i] = Loader.ImageLoader("/PNG/Meteors/meteorBrown_big" + (i+1) + ".png");
@@ -49,6 +51,7 @@ public class Assets {
         for(int i = 0; i < numbers.length; i++){
             numbers[i] = Loader.ImageLoader("/PNG/UI/numeral" + (i) + ".png");
         }
+
     }
 
 }

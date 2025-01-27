@@ -6,7 +6,7 @@ public class Constants {
     public static final int HEIGHT = 600;
 
     // player properties
-    public static final int FIRERATE = 200;
+    public static final int FIRERATE = 150;
     public static final double DELTAANGLE = 0.1;
     public static final double ACC = 0.2;
     public static final double PLAYER_MAX_VEL = 7.0;
@@ -21,7 +21,7 @@ public class Constants {
     public static final int NODE_RADIUS = 160;
     public static final double UFO_MASS = 60;
     public static final int UFO_MAX_VEL = 3;
-    public static final long UFO_FIRE_RATE = 1000;
+    public static final long UFO_FIRE_RATE = 1500;
     public static final double UFO_ANGLE_RANGE = Math.PI/2;
 
     //Score
