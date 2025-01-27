@@ -12,6 +12,8 @@ import Math.Vector2D;
 import Graphics.Animation;
 
 public class GameState {
+    public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
+            Constants.HEIGHT/2 - Assets.player.getHeight()/2);
 
     private Player player;
     private ArrayList<MovingObjects> movingObjects = new ArrayList<MovingObjects>();
@@ -24,9 +26,7 @@ public class GameState {
 
     public GameState()
     {
-        player = new Player(new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
-                Constants.HEIGHT/2 - Assets.player.getHeight()/2),
-                new Vector2D(), Constants.PLAYER_MAX_VEL, Assets.player, this);
+        player = new Player(PLAYER_START_POSITION, new Vector2D(), Constants.PLAYER_MAX_VEL, Assets.player, this);
         movingObjects.add(player);
         meteors = 1;
         startWave();
@@ -203,5 +203,8 @@ public class GameState {
     }
     public Player getPlayer(){
         return player;
+    }
+    public void substractLife(){
+        lives--;
     }
 }

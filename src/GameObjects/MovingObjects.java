@@ -50,6 +50,14 @@ public abstract class MovingObjects extends GameObject {
     //no destruye los dos meteoros, siguen su curso
     //momento de colision
     private void objectCollision(MovingObjects a, MovingObjects b){
+        if(a instanceof  Player && ((Player)a).isSpawning()){
+            return;
+        }
+        if(b instanceof  Player && ((Player)b).isSpawning()){
+            return;
+        }
+
+
         if (!(a instanceof Meteor && b instanceof Meteor)) {
             gameState.playExplosion(getCenter());
             a.Destroy();
