@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import Math.Vector2D;
 import Graphics.Assets;
+import Graphics.Sound;
 
 public class Ufo extends MovingObjects{
 
@@ -22,6 +23,8 @@ public class Ufo extends MovingObjects{
 
     private Chronometer fireRate;
 
+    private Sound shoot;
+
 
 
     public Ufo(Vector2D position, Vector2D velocity, double maxVel, BufferedImage texture,
@@ -33,6 +36,7 @@ public class Ufo extends MovingObjects{
         following = true;
         fireRate = new Chronometer();
         fireRate.run(Constants.UFO_FIRE_RATE);
+        shoot = new Sound(Assets.ufoShoot);
     }
 
     private Vector2D pathFollowing(){
@@ -101,7 +105,11 @@ public class Ufo extends MovingObjects{
             gameState.getMovingObjects().add(0,laser);
 
             fireRate.run(Constants.UFO_FIRE_RATE);
+            shoot.play();
 
+        }
+        if(shoot.getFramePosition() > 8500) {
+            shoot.stop();
         }
 
 

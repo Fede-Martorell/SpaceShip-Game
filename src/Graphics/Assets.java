@@ -1,5 +1,6 @@
 package Graphics;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -25,6 +26,8 @@ public class Assets {
     //FONTS
     public static Font fontBig;
     public static Font fontMed;
+    //Sounds
+    public static Clip backgroundMusic, explosion, playerLoose, playerShoot, ufoShoot;
 
 
     public static void init()
@@ -57,7 +60,11 @@ public class Assets {
         for(int i = 0; i < numbers.length; i++){
             numbers[i] = Loader.ImageLoader("/PNG/UI/numeral" + (i) + ".png");
         }
-
+        backgroundMusic = Loader.loadSounds("/Sounds/backgroundMusic.wav");
+        explosion = Loader.loadSounds("/Sounds/explosion.wav");
+        playerLoose = Loader.loadSounds("/Sounds/playerLoose.wav");
+        playerShoot = Loader.loadSounds("/Sounds/playerShoot.wav");
+        ufoShoot = Loader.loadSounds("/Sounds/ufoShoot.wav");
     }
 
 }

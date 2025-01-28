@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import Graphics.Assets;
+import Graphics.Sound;
 
 import Input.KeyBoard;
 import Math.Vector2D;
@@ -22,6 +23,8 @@ public class Player extends MovingObjects{
 
     private Chronometer spawnTime, flickerTime;
 
+    private Sound shoot, loose;
+
 
 
     public Player(Vector2D position,Vector2D velocity,double maxVel, BufferedImage texture, GameState gameState) {
@@ -31,6 +34,8 @@ public class Player extends MovingObjects{
         fireRate = new Chronometer();
         spawnTime = new Chronometer();
         flickerTime = new Chronometer();
+        shoot = new Sound(Assets.playerShoot);
+        loose = new Sound(Assets.playerLoose);
     }
 
     @Override
@@ -51,6 +56,7 @@ public class Player extends MovingObjects{
                     getCenter().add(heading.scale(width)),heading, Constants.LASER_VEL,
                     angle,Assets.greenLaser, gameState));
             fireRate.run(Constants.FIRERATE);
+            shoot.play();
         }
 
         //Rotacion sentido aguja del reloj.
@@ -107,6 +113,7 @@ public class Player extends MovingObjects{
     public void Destroy(){
         spawning = true;
         spawnTime.run(Constants.SPAWNING_TIME);
+        loose.play();
         resetValues();
         gameState.substractLife();
     }

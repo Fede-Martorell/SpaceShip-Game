@@ -1,7 +1,9 @@
 package GameObjects;
 
+import Graphics.Assets;
 import Math.Vector2D;
 import States.GameState;
+import Graphics.Sound;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -17,6 +19,8 @@ public abstract class MovingObjects extends GameObject {
     protected int height;
     protected GameState gameState;
 
+    private Sound explosion;
+
 
 
     public MovingObjects(Vector2D position, Vector2D velocity, double maxVel, BufferedImage texture, GameState gameState) {
@@ -27,6 +31,7 @@ public abstract class MovingObjects extends GameObject {
         width = texture.getWidth();
         height = texture.getHeight();
         angle = 0;
+        explosion = new Sound(Assets.explosion);
     }
 
     protected void collideWith(){
@@ -67,6 +72,9 @@ public abstract class MovingObjects extends GameObject {
 
     protected void Destroy(){
         gameState.getMovingObjects().remove(this);
+        if(!(this instanceof Laser)) {
+            explosion.play();
+        }
     }
 
     protected Vector2D getCenter(){

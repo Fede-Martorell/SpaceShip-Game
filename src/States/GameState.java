@@ -8,7 +8,7 @@ import GameObjects.*;
 import Graphics.Assets;
 import Math.Vector2D;
 import Graphics.Animation;
-import Graphics.Text;
+import Graphics.Sound;
 
 public class GameState {
     public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
@@ -25,12 +25,17 @@ public class GameState {
     private int meteors;
     private int waves = 1;
 
+    private Sound backgroundMusic;
+
     public GameState()
     {
         player = new Player(PLAYER_START_POSITION, new Vector2D(), Constants.PLAYER_MAX_VEL, Assets.player, this);
         movingObjects.add(player);
         meteors = 1;
         startWave();
+        backgroundMusic = new Sound(Assets.backgroundMusic);
+        backgroundMusic.loop();
+        backgroundMusic.changeVolume(-20.0f);
     }
 
     public void addScore(int value, Vector2D position){
