@@ -22,6 +22,10 @@ public class Assets {
     //numers
     public static BufferedImage[] numbers = new BufferedImage[11];
     public static BufferedImage life;
+    //FONTS
+    public static Font fontBig;
+    public static Font fontMed;
+
 
     public static void init()
     {
@@ -31,6 +35,8 @@ public class Assets {
         redLaser = Loader.ImageLoader("/PNG/Lasers/laserRed01.png");
         greenLaser = Loader.ImageLoader("/PNG/Lasers/laserGreen11.png");
         life = Loader.ImageLoader("/PNG/UI/playerLife1_blue.png");
+        fontBig = Loader.loadFont("/Bonus/future.ttf",42);
+        fontMed = Loader.loadFont("/Bonus/future.ttf",20);
 
         for(int i = 0; i < bigs.length; i++){
             bigs[i] = Loader.ImageLoader("/PNG/Meteors/meteorBrown_big" + (i+1) + ".png");

@@ -113,7 +113,7 @@ public class Ufo extends MovingObjects{
     }
     @Override
     public void Destroy() {
-        gameState.addScore(Constants.UFO_SCORE);
+        gameState.addScore(Constants.UFO_SCORE,position);
         super.Destroy();
     }
 

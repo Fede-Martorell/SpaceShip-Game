@@ -1,8 +1,6 @@
 package States;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -10,6 +8,7 @@ import GameObjects.*;
 import Graphics.Assets;
 import Math.Vector2D;
 import Graphics.Animation;
+import Graphics.Text;
 
 public class GameState {
     public static final Vector2D PLAYER_START_POSITION = new Vector2D(Constants.WIDTH/2 - Assets.player.getWidth()/2,
@@ -18,11 +17,13 @@ public class GameState {
     private Player player;
     private ArrayList<MovingObjects> movingObjects = new ArrayList<MovingObjects>();
     private ArrayList<Animation> explosions = new ArrayList<Animation>();
+    private ArrayList<Message> messages = new ArrayList<Message>();
 
     private int score = 0;
     private int lives = 3;
 
     private int meteors;
+    private int waves = 1;
 
     public GameState()
     {
@@ -32,8 +33,10 @@ public class GameState {
         startWave();
     }
 
-    public void addScore(int value){
+    public void addScore(int value, Vector2D position){
         score += value;
+        messages.add(new Message(position, true, "+"+value+" score",Color.WHITE,
+                false,Assets.fontMed,this));
     }
 
     public void divideMeteor(Meteor meteor){
@@ -67,6 +70,10 @@ public class GameState {
     }
 
     private void startWave(){
+
+        messages.add(new Message(new Vector2D(Constants.WIDTH/2,Constants.HEIGHT/2),true,
+                "WAVE" + waves, Color.WHITE,true,Assets.fontBig,this));
+
         double x, y;
         for(int i=0; i < meteors; i++){
             x = i % 2 == 0 ? Math.random()* Constants.WIDTH : 0;
@@ -153,6 +160,10 @@ public class GameState {
         // Mejoramos las texturas en rotaciones.
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
+        for(int i = 0; i < messages.size(); i++){
+            messages.get(i).draw(g2d);
+        }
+
         for(int i = 0; i < movingObjects.size(); i++){
             movingObjects.get(i).draw(g);
         }
@@ -165,6 +176,7 @@ public class GameState {
         }
         drawScore(g);
         drawLives(g);
+
     }
 
     private void drawScore(Graphics g){
@@ -200,6 +212,9 @@ public class GameState {
 
     public ArrayList<MovingObjects> getMovingObjects() {
         return movingObjects;
+    }
+    public ArrayList<Message> getMessages(){
+        return messages;
     }
     public Player getPlayer(){
         return player;

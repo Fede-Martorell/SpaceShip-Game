@@ -39,7 +39,7 @@ public class Meteor extends MovingObjects{
     @Override
     public  void Destroy(){
         gameState.divideMeteor(this);
-        gameState.addScore(Constants.METEOR_SCORE);
+        gameState.addScore(Constants.METEOR_SCORE,position);
         super.Destroy();
     }
 
