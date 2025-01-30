@@ -36,4 +36,10 @@ public class Constants {
 
     public static final int LOADING_BAR_WIDTH = 500;
     public static final int LOADING_BAR_HEIGHT = 50;
+
+    public static final String RETURN = "RETURN";
+    public static final String HIGH_SCORES = "HIGHEST SCORES";
+
+    public static final String SCORE = "SCORE";
+    public static final String DATE = "DATE";
 }
