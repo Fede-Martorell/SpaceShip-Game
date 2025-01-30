@@ -21,7 +21,7 @@ public abstract class MovingObjects extends GameObject {
 
     private Sound explosion;
 
-
+    protected boolean Dead;
 
     public MovingObjects(Vector2D position, Vector2D velocity, double maxVel, BufferedImage texture, GameState gameState) {
         super(position, texture);
@@ -32,6 +32,7 @@ public abstract class MovingObjects extends GameObject {
         height = texture.getHeight();
         angle = 0;
         explosion = new Sound(Assets.explosion);
+        Dead = false;
     }
 
     protected void collideWith(){
@@ -46,7 +47,7 @@ public abstract class MovingObjects extends GameObject {
             // el segundo getCenter es el objeto con el que colisionariamos.
             double distance = m.getCenter().subtract(getCenter()).getMagnitude();
             //segunda condicion es para asegurar que el objeto este en el array.
-            if(distance < m.width/2 + width/2 && movingObjects.contains(this)){
+            if(distance < m.width/2 + width/2 && movingObjects.contains(this) && !m.Dead && !Dead){
                 objectCollision(m,this);
             }
         }
@@ -71,7 +72,7 @@ public abstract class MovingObjects extends GameObject {
     }
 
     protected void Destroy(){
-        gameState.getMovingObjects().remove(this);
+        Dead = true;
         if(!(this instanceof Laser)) {
             explosion.play();
         }
@@ -82,4 +83,5 @@ public abstract class MovingObjects extends GameObject {
         return new Vector2D(position.getX() + width/2,
                 position.getY() + height/2);
     }
+    public boolean isDead() {return Dead;}
 }

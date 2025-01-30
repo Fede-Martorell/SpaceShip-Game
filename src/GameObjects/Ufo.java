@@ -79,7 +79,7 @@ public class Ufo extends MovingObjects{
         position = position.add(velocity);
 
         if(position.getX() > Constants.WIDTH || position.getY() > Constants.HEIGHT ||
-        position.getX() < 0 || position.getY() < 0){
+        position.getX() < -width || position.getY() < -height){
             Destroy();
         }
         //shoot,   como siempre el segundo getCenter es el del nuevo objeto Ufo en este caso.

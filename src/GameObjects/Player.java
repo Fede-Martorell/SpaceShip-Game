@@ -16,7 +16,6 @@ public class Player extends MovingObjects{
     private Vector2D acceleration;
 
     private boolean accelerating = false;
-
     private Chronometer fireRate;
 
     private boolean spawning, visible;
@@ -58,7 +57,9 @@ public class Player extends MovingObjects{
             fireRate.run(Constants.FIRERATE);
             shoot.play();
         }
-
+        if(shoot.getFramePosition() > 8500) {
+            shoot.stop();
+        }
         //Rotacion sentido aguja del reloj.
         if (KeyBoard.Right || KeyBoard.RIGHT){
             angle += Constants.DELTAANGLE;
@@ -114,8 +115,11 @@ public class Player extends MovingObjects{
         spawning = true;
         spawnTime.run(Constants.SPAWNING_TIME);
         loose.play();
+        if(!gameState.subtractLife()) {
+            gameState.gameOver();
+            super.Destroy();
+        }
         resetValues();
-        gameState.substractLife();
     }
 
     private void resetValues(){
@@ -136,8 +140,8 @@ public class Player extends MovingObjects{
         AffineTransform at1 = AffineTransform.getTranslateInstance(position.getX()+ width/2 + 5, position.getY() + height/2 + 10);
         AffineTransform at2 = AffineTransform.getTranslateInstance(position.getX() + 5, position.getY() + height/2 + 10);
     //Dibujamos el velocidad.
-        at2.rotate(angle, width/2 - 5,-10);
         at1.rotate(angle, -5,-10);
+        at2.rotate(angle, width/2 - 5,-10);
         if (accelerating){
             g2d.drawImage(Assets.speed,at1,null);
             g2d.drawImage(Assets.speed,at2,null);

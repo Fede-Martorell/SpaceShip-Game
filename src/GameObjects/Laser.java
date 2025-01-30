@@ -41,6 +41,6 @@ public class Laser extends MovingObjects{
     @Override
     public Vector2D getCenter(){
         return new Vector2D(position.getX() + width/2,
-                position.getY() + width);
+                position.getY() + width/2);
     }
 }

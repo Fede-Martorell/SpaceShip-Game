@@ -7,7 +7,6 @@ import Graphics.Text;
 import java.awt.*;
 
 public class Message {
-    private GameState gameState;
     private float alpha;
     private String text;
     private Vector2D position;
@@ -16,16 +15,17 @@ public class Message {
     private boolean fade;
     private Font font;
     private final float deltaAlpha=0.01f;
+    private boolean dead;
 
     public Message(Vector2D position, boolean fade, String text, Color color,
-                   boolean center, Font font,GameState gameState) {
-        this.gameState = gameState;
+                   boolean center, Font font) {
         this.font = font;
         this.fade = fade;
         this.text = text;
         this.center = center;
         this.color = color;
         this.position = position;
+        this.dead = false;
         if(fade){
             alpha = 1;
         }else{
@@ -42,10 +42,15 @@ public class Message {
         }else{
             alpha += deltaAlpha;
         }
-        if(fade && alpha < 0 || !fade && alpha>1){
-            gameState.getMessages().remove(this);
+        if(fade && alpha < 0){
+            dead = true;
+        }
+        if(!fade && alpha > 1){
+            fade = true;
+            alpha = 1;
         }
 
     }
+    public boolean isDead() {return dead;}
 
 }

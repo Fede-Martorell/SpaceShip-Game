@@ -32,18 +32,17 @@ public class Loader {
         }
 
     }
-    public static Clip loadSounds(String path){
+    public static Clip loadSound(String path){
 
         try {
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(Loader.class.getResource(path)));
             return clip;
-        } catch (IOException | LineUnavailableException e) {
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
         }
         return null;
+
     }
 
 

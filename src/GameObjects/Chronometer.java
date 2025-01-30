@@ -6,9 +6,9 @@ public class Chronometer {
     private boolean running;
 
     public Chronometer(){
-        running = false;
-        time = 0;
         delta = 0;
+        lastTime = System.currentTimeMillis();
+        running = false;
 
     }
     public void run(long time){
@@ -19,7 +19,7 @@ public class Chronometer {
         if(running){
             delta += System.currentTimeMillis() - lastTime;
         }
-        if(delta>= time){
+        if(delta >= time){
             running = false;
             delta = 0;
         }
